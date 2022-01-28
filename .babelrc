@@ -1,0 +1,4 @@
+{
+  "presets": [["@babel/preset-env", { "useBuiltIns": false, "debug": false }]],
+  "plugins": [["inline-json"]]
+}

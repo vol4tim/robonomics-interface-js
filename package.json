@@ -1,0 +1,33 @@
+{
+  "name": "robonomics-interface",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "license": "BSD-3-Clause",
+  "author": "vol4tim <sas@robonomics.network>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/airalab/robonomics-interface-js.git"
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && babel src --out-dir dist",
+    "local": "nodemon example/index.js --exec babel-node",
+    "pretty": "prettier --write \"./src/**/*.{js,ts,json}\""
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.8",
+    "@babel/core": "^7.16.10",
+    "@babel/eslint-parser": "^7.16.5",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "@polkadot/api": "^7.4.1",
+    "@polkadot/extension-dapp": "^0.42.6",
+    "@polkadot/ui-keyring": "^0.89.2",
+    "babel-plugin-inline-json": "^2.1.0",
+    "core-js": "^3.20.3",
+    "eslint": "^8.7.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2"
+  }
+}
