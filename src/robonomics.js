@@ -32,7 +32,7 @@ export default class Robonomics {
 
     instances[config.name || config.endpoint] = this;
     if (config.runImmediate) {
-      this.init();
+      this.run();
     }
   }
   static getInstance(name = null) {

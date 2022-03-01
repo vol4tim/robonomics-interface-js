@@ -1,5 +1,6 @@
 module.exports = {
   transpileDependencies: ["@polkadot"],
+  parallel: false,
   configureWebpack: {
     module: {
       rules: [
