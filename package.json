@@ -1,6 +1,6 @@
 {
   "name": "robonomics-interface",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "main": "dist/index.js",
   "license": "BSD-3-Clause",
   "author": "vol4tim <sas@robonomics.network>",
