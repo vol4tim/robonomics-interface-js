@@ -2,24 +2,26 @@ import { ApiPromise, WsProvider } from "@polkadot/api";
 import Account from "./modules/account";
 import Datalog from "./modules/datalog";
 import Launch from "./modules/launch";
+import Liability from "./modules/liability";
 import Rws from "./modules/rws";
 import Staking from "./modules/staking";
+import { mergedeep } from "./utils";
+import defaultConfig from "./config";
 
 const instances = {};
 
-const defaultConfig = {
-  name: false,
-  runImmediate: false,
-  endpoint: "wss://kusama.rpc.robonomics.network/",
-  types: {},
-  rpc: {}
-};
+/**
+ * @typedef {import('./accountManager').default} AccountManager
+ */
 
 export default class Robonomics {
-  constructor(config) {
-    this.config = { ...defaultConfig, ...config };
+  constructor(config = {}) {
+    this.config = mergedeep(defaultConfig, config);
     this.api = null;
     this.provider = null;
+    /**
+     * @type {AccountManager}
+     */
     this.accountManager = null;
     this.isReady = false;
 
@@ -29,12 +31,16 @@ export default class Robonomics {
     this.launch = new Launch(this);
     this.rws = new Rws(this);
     this.staking = new Staking(this);
+    this.liability = new Liability(this);
 
     instances[config.name || config.endpoint] = this;
     if (config.runImmediate) {
       this.run();
     }
   }
+  /**
+   * @returns {Robonomics}
+   */
   static getInstance(name = null) {
     if (name === null) {
       const instancesArray = Object.values(instances);
@@ -100,7 +106,9 @@ export default class Robonomics {
         if (
           event.section !== "system" &&
           (!filter.section || event.section === filter.section) &&
-          (!filter.method || event.method === filter.method)
+          (!filter.method ||
+            event.method === filter.method ||
+            filter.method.includes(event.method))
         ) {
           result.push({
             phase: index,

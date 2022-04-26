@@ -1,3 +1,6 @@
+/**
+ * @param {import('../../src').Robonomics} robonomics
+ */
 export default async function (robonomics) {
   // Saves the random number to datalog
   const logger = async function () {

@@ -1,3 +1,6 @@
+/**
+ * @param {import('../../src').Robonomics} robonomics
+ */
 export default async function (robonomics) {
   const unsubscribe = await robonomics.onBlock((number) => {
     console.log(`Block: ${number}`);

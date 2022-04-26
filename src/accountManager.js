@@ -11,6 +11,10 @@ export class ErrorAccount extends Error {
 let isReady = false;
 let isError = undefined;
 export default class AccountManager {
+  /**
+   * @param {import('@polkadot/keyring').Keyring} keyring
+   * @param {import('@polkadot/api').ApiPromise} api
+   */
   constructor(keyring, api = null) {
     this.keyring = keyring;
     this.setApi(api);
@@ -25,6 +29,9 @@ export default class AccountManager {
       return Promise.resolve(u8aToHex(this.account.sign(data)));
     };
   }
+  /**
+   * @param {import('@polkadot/api').ApiPromise} api
+   */
   setApi(api) {
     if (api) {
       this.keyring.setSS58Format(api.registry.chainSS58);
@@ -42,6 +49,12 @@ export default class AccountManager {
   }
   static isError() {
     return isError;
+  }
+  get isReady() {
+    return isReady;
+  }
+  setReady(status) {
+    isReady = status;
   }
   onReady(cb) {
     if (isReady || isError) {

@@ -1,4 +1,7 @@
 export default class Launch {
+  /**
+   * @param {import('../index').Robonomics} robonomics
+   */
   constructor(robonomics) {
     this.robonomics = robonomics;
   }

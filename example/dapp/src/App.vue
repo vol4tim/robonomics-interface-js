@@ -5,6 +5,8 @@
     <Datalog />
     <hr />
     <Launch />
+    <hr />
+    <Liability />
   </template>
   <template v-else>...</template>
 </template>
@@ -13,6 +15,7 @@
 import Account from "./components/Account.vue";
 import Datalog from "./components/Datalog.vue";
 import Launch from "./components/Launch.vue";
+import Liability from "./components/Liability.vue";
 import robonomics from "./robonomics";
 
 export default {
@@ -20,7 +23,8 @@ export default {
   components: {
     Account,
     Datalog,
-    Launch
+    Launch,
+    Liability
   },
   data() {
     return {

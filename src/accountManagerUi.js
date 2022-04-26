@@ -6,7 +6,7 @@ import {
 import { u8aToHex } from "@polkadot/util";
 import AccountManager from "./accountManager";
 
-function onLoad() {
+function onLoadExtensions() {
   return new Promise(function (resolve, reject) {
     const timeout = setTimeout(() => {
       clearTimeout(timeout);
@@ -23,16 +23,28 @@ function onLoad() {
   });
 }
 
+let extensions = [];
+
 export default class AccountManagerUi extends AccountManager {
+  /**
+   * @param {import('@polkadot/ui-keyring').Keyring} keyring
+   * @param {import('@polkadot/api').ApiPromise} api
+   */
   constructor(keyring, api = null) {
     super(keyring, api);
     AccountManager.setReady(false);
   }
+  /**
+   * @param {import('@polkadot/ui-keyring').Keyring} keyring
+   * @param {Object} config
+   */
   static async initPlugin(keyring, config = {}) {
-    await onLoad();
-    const extensions = await web3Enable("robonomics");
+    await onLoadExtensions();
+    extensions = await web3Enable("robonomics");
     if (extensions.length === 0) {
-      throw new Error("no extension");
+      throw new Error(
+        "Allow the browser extension to interact with dapp and try again."
+      );
     }
     const accounts = await web3Accounts();
     const injectedAccounts = accounts.map(({ address, meta }) => ({
@@ -41,6 +53,15 @@ export default class AccountManagerUi extends AccountManager {
     }));
     keyring.loadAll({ ...config }, injectedAccounts);
     AccountManager.setReady(true);
+  }
+  get extensions() {
+    return extensions;
+  }
+  static checkInstalled(source) {
+    return !!window?.injectedWeb3?.[source];
+  }
+  static checkAllow(source) {
+    return extensions.findIndex((item) => item.name === source) >= 0;
   }
   async mixin() {
     if (this.account.meta.isInjected) {

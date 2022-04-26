@@ -1,6 +1,8 @@
 <template>
   <div>
     <h3>Datalog</h3>
+    <input v-model="account" />
+    <button @click="read(account)">read</button>
     <div class="log">
       <div v-for="(item, key) in log" :key="key">
         {{ item }}
@@ -23,15 +25,18 @@ export default {
       data: "",
       result: null,
       error: null,
-      unsubscribe: null
+      unsubscribe: null,
+      account: null
     };
   },
   async created() {
     if (robonomics.accountManager.account) {
-      this.read(robonomics.accountManager.account.address);
+      this.account = robonomics.accountManager.account.address;
+      this.read(this.account);
     }
-    this.unsubscribe = robonomics.accountManager.onChange(account => {
-      this.read(account.address);
+    this.unsubscribe = robonomics.accountManager.onChange((account) => {
+      this.account = account.address;
+      this.read(this.account);
     });
   },
   unmounted() {
@@ -42,7 +47,7 @@ export default {
   methods: {
     async read(address) {
       const log = await robonomics.datalog.read(address);
-      this.log = log.map(item => {
+      this.log = log.map((item) => {
         return item.toHuman();
       });
     },
@@ -54,7 +59,7 @@ export default {
         const resultTx = await robonomics.accountManager.signAndSend(tx);
         console.log("saved", resultTx);
         this.result = `${resultTx.blockNumber}-${resultTx.txIndex}`;
-        this.read(robonomics.accountManager.account.address);
+        this.read(this.account);
       } catch (error) {
         this.error = error.message;
       }

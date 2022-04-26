@@ -1,6 +1,9 @@
 import { bnToBn } from "@polkadot/util";
 
 export default class Staking {
+  /**
+   * @param {import('../index').Robonomics} robonomics
+   */
   constructor(robonomics) {
     this.robonomics = robonomics;
   }

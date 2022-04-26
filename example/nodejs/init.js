@@ -1,4 +1,4 @@
-import { Robonomics, AccountManager } from "../src/index";
+import { Robonomics, AccountManager } from "../../src";
 import { Keyring } from "@polkadot/keyring";
 
 export default async function () {
@@ -12,7 +12,9 @@ export default async function () {
   await robonomics.run();
   console.log("Robonomics started");
 
+  robonomics.accountManager.keyring.addFromUri("//Alice");
   robonomics.accountManager.keyring.addFromUri("//Bob");
+  robonomics.accountManager.keyring.addFromUri("//Eve");
   const accounts = robonomics.accountManager.getAccounts();
   robonomics.accountManager.selectAccountByAddress(accounts[0].address);
 

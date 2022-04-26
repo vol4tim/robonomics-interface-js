@@ -7643,10 +7643,11 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
-robonomics-interface@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/robonomics-interface/-/robonomics-interface-0.1.0.tgz#e157273e376da152dde2082be86f88d2477989f6"
-  integrity sha512-ybsf1I6DKRU11vZh3/74QGYLzZilfTQUTlkHtiIYmPoG75f8RBvZ9R0lXfn4Y0+b3L78BqggiJgSmEHhNM/rpQ==
+"robonomics-interface@file:../..":
+  version "0.1.1"
+
+"robonomics-interface@file:./../..":
+  version "0.1.1"
 
 run-async@^2.4.0:
   version "2.4.1"

@@ -1,4 +1,7 @@
 export default class Rws {
+  /**
+   * @param {import('../index').Robonomics} robonomics
+   */
   constructor(robonomics) {
     this.robonomics = robonomics;
     this.subscription = false;
