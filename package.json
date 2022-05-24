@@ -1,7 +1,8 @@
 {
   "name": "robonomics-interface",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "dist/index.js",
+  "module": "dist/esm/index.js",
   "license": "BSD-3-Clause",
   "author": "vol4tim <sas@robonomics.network>",
   "repository": {
@@ -10,7 +11,9 @@
   },
   "scripts": {
     "clean": "rimraf dist",
-    "build": "npm run clean && babel src --out-dir dist",
+    "build:cjs": "babel --out-dir dist src",
+    "build:esm": "ESM=true babel --out-dir dist/esm src",
+    "build": "npm run clean && npm run build:cjs && npm run build:esm",
     "local": "nodemon example/nodejs/index.js --exec babel-node",
     "pretty": "prettier --write \"./src/**/*.{js,ts,json}\""
   },
@@ -19,17 +22,19 @@
     "@babel/core": "^7.16.10",
     "@babel/eslint-parser": "^7.16.5",
     "@babel/node": "^7.16.8",
+    "@babel/plugin-transform-runtime": "^7.17.10",
     "@babel/preset-env": "^7.16.11",
     "@polkadot/api": "^7.4.1",
     "@polkadot/extension-dapp": "^0.42.6",
     "@polkadot/ui-keyring": "^0.89.2",
-    "babel-plugin-inline-json": "^2.1.0",
-    "cids": "^1.1.9",
     "core-js": "^3.20.3",
     "eslint": "^8.7.0",
-    "multihashing-async": "^2.1.4",
     "nodemon": "^2.0.15",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2"
+  },
+  "dependencies": {
+    "cids": "^1.1.9",
+    "multihashing-async": "^2.1.4"
   }
 }

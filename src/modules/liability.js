@@ -1,6 +1,4 @@
 import { u8aToHex } from "@polkadot/util";
-import mh from "multihashing-async";
-import CID from "cids";
 
 export default class Liability {
   /**
@@ -136,21 +134,5 @@ export default class Liability {
   signReport(account, index, payload) {
     const { data } = this.getDataReport(index, payload);
     return account.sign(data);
-  }
-  encodeIpfs(hash) {
-    // eslint-disable-next-line no-undef
-    const digest = Buffer.from(hash.slice(2), "hex");
-    const combined = mh.multihash.encode(digest, "sha2-256");
-    const cid = new CID(0, "dag-pb", combined);
-    return cid.toString();
-  }
-  decodeIpfs(ipfshash) {
-    return (
-      "0x" +
-      // eslint-disable-next-line no-undef
-      Buffer.from(
-        mh.multihash.decode(new CID(ipfshash).multihash).digest
-      ).toString("hex")
-    );
   }
 }

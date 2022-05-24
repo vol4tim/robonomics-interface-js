@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import AccountManager from "../robonomics-interface/accountManagerUi";
+import { AccountManagerUi as AccountManager } from "robonomics-interface";
 import robonomics from "../robonomics";
 import { formatBalance } from "@polkadot/util";
 

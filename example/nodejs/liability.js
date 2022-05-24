@@ -1,3 +1,5 @@
+import { utils } from "../../src";
+
 /**
  * @param {import('../../src').Robonomics} robonomics
  */
@@ -15,7 +17,7 @@ export default async function (robonomics) {
 
   /* create liability */
   async function create() {
-    const technics = robonomics.liability.decodeIpfs(
+    const technics = utils.cidToHex(
       "QmRKoW3xXgf4QHYt3PE2aBkpkyGE8jAaFoeX8B6J75swVM"
     );
     const price = 10;
@@ -40,7 +42,7 @@ export default async function (robonomics) {
 
   /* finalize liability */
   async function finalize() {
-    const payload = robonomics.liability.decodeIpfs(
+    const payload = utils.cidToHex(
       "QmRKoW3xXgf4QHYt3PE2aBkpkyGE8jAaFoeX8B6J75swVM"
     );
     const index = latestIndex;

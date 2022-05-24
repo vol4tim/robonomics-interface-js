@@ -3,6 +3,8 @@ npm-debug.log
 yarn-error.log
 yarn.lock
 package-lock.json
+babel.config.json
+babel.esm.json
 .babelrc
 .editorconfig
 .eslintrc.json

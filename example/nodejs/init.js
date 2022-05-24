@@ -1,4 +1,4 @@
-import { Robonomics, AccountManager } from "../../src";
+import { Robonomics, AccountManager } from "../../dist";
 import { Keyring } from "@polkadot/keyring";
 
 export default async function () {

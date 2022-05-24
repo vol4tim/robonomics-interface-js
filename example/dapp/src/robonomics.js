@@ -1,5 +1,4 @@
-import { Robonomics } from "./robonomics-interface";
-import AccountManager from "./robonomics-interface/accountManagerUi";
+import { Robonomics, AccountManagerUi as AccountManager } from "robonomics-interface";
 import keyring from "@polkadot/ui-keyring";
 
 const robonomics = new Robonomics({

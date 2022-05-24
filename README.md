@@ -7,13 +7,19 @@ Javascript library for Robonomics network
 Installation is done using [npm](https://www.npmjs.com/). To install, run:
 
 ```bash
-> npm install robonomics-interface --save
+> npm install robonomics-interface @polkadot/api --save
 ```
 
 Or using [yarn](https://yarnpkg.com/). To install, run:
 
 ```bash
-> yarn add robonomics-interface
+> yarn add robonomics-interface @polkadot/api
+```
+
+For dApp require dependencies
+
+```bash
+> yarn add @polkadot/extension-dapp @polkadot/ui-keyring
 ```
 
 ## Usage example

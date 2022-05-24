@@ -1,3 +1,5 @@
+import { cidToHex } from "../utils";
+
 export default class Launch {
   /**
    * @param {import('../index').Robonomics} robonomics
@@ -8,6 +10,9 @@ export default class Launch {
 
   // extrinsics
   send(address, param) {
+    if (param.slice(0, 2) === "Qm") {
+      param = cidToHex(param);
+    }
     return this.robonomics.api.tx.launch.launch(address, param);
   }
 

@@ -26,8 +26,13 @@ export default {
       unsubscribe: null
     };
   },
+  computed: {
+    parameter() {
+      return "0x" + (this.status ? "1" : "0").padStart(64, 0);
+    }
+  },
   async created() {
-    this.unsubscribe = await robonomics.launch.on({}, item => {
+    this.unsubscribe = await robonomics.launch.on({}, (item) => {
       console.log(item);
     });
   },
@@ -41,7 +46,7 @@ export default {
       this.error = "";
       this.result = "";
       try {
-        const tx = robonomics.launch.send(this.robot, this.status);
+        const tx = robonomics.launch.send(this.robot, this.parameter);
         const resultTx = await robonomics.accountManager.signAndSend(tx);
         console.log("saved", resultTx);
         this.result = `${resultTx.blockNumber}-${resultTx.txIndex}`;
