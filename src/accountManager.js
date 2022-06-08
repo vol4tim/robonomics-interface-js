@@ -75,12 +75,7 @@ export default class AccountManager {
     });
   }
   async selectAccountByAddress(address) {
-    const account = this.keyring.getPair(address);
-    this.account = {
-      ...account,
-      address: encodeAddress(account.address, this.api.registry.chainSS58)
-    };
-    await this.mixin();
+    await this.setSender(address);
     for (const cb of this.listeners) {
       cb(this.account);
     }
@@ -93,8 +88,20 @@ export default class AccountManager {
       this.listeners.splice(i, 1);
     };
   }
-  useSubscription(address = false) {
-    this.subscription = address;
+  async setSender(sender) {
+    const account = this.keyring.getPair(sender);
+    this.account = {
+      ...account,
+      address: encodeAddress(account.address, this.api.registry.chainSS58)
+    };
+    await this.mixin();
+    return this.account;
+  }
+  async useSubscription(subscription = false, sender = false) {
+    this.subscription = subscription;
+    if (subscription && sender) {
+      await this.setSender(sender);
+    }
   }
   async signAndSend(tx, options = {}) {
     if (this.account === null) {
