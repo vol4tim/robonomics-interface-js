@@ -3,7 +3,7 @@ import {
   web3Enable,
   web3FromSource
 } from "@polkadot/extension-dapp";
-import { u8aToHex } from "@polkadot/util";
+import { u8aToHex, u8aWrapBytes } from "@polkadot/util";
 import AccountManager from "./accountManager";
 
 function onLoadExtensions() {
@@ -32,7 +32,6 @@ export default class AccountManagerUi extends AccountManager {
    */
   constructor(keyring, api = null) {
     super(keyring, api);
-    AccountManager.setReady(false);
   }
   /**
    * @param {import('@polkadot/ui-keyring').Keyring} keyring
@@ -67,11 +66,11 @@ export default class AccountManagerUi extends AccountManager {
     if (this.account.meta.isInjected) {
       const injected = await web3FromSource(this.account.meta.source);
       this.api.setSigner(injected.signer);
-      this.account.signMsg = async function (data) {
+      this.account.signMsg = async (data) => {
         return (
           await injected.signer.signRaw({
             address: this.account.address,
-            data: u8aToHex(data),
+            data: u8aToHex(u8aWrapBytes(data)),
             type: "bytes"
           })
         ).signature;

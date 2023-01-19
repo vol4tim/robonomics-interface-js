@@ -22,7 +22,6 @@ export default class AccountManager {
     this.subscription = false;
     this.rws = null;
     this.listeners = [];
-    isReady = true;
   }
   async mixin() {
     this.account.signMsg = async function (data) {
