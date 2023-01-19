@@ -1,5 +1,3 @@
-import { u8aToHex } from "@polkadot/util";
-
 export default class Liability {
   /**
    * @param {import('../index').Robonomics} robonomics
@@ -44,10 +42,8 @@ export default class Liability {
       economics: this.toEconomicsType(price),
       promisee: promisee,
       promisor: promisor,
-      promisee_signature: {
-        Sr25519: u8aToHex(promisee_signature)
-      },
-      promisor_signature: { Sr25519: u8aToHex(promisor_signature) }
+      promisee_signature: promisee_signature,
+      promisor_signature: promisor_signature
     });
   }
   finalize(index, payload, sender, signature) {
@@ -55,9 +51,7 @@ export default class Liability {
       index,
       sender,
       payload: this.toIpfsType(payload),
-      signature: {
-        Sr25519: u8aToHex(signature)
-      }
+      signature: signature
     });
   }
 
