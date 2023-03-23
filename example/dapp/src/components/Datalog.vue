@@ -16,8 +16,6 @@
 </template>
 
 <script>
-import robonomics from "../robonomics";
-
 export default {
   data() {
     return {
@@ -30,11 +28,11 @@ export default {
     };
   },
   async created() {
-    if (robonomics.accountManager.account) {
-      this.account = robonomics.accountManager.account.address;
+    if (this.$robonomics.accountManager.account) {
+      this.account = this.$robonomics.accountManager.account.address;
       this.read(this.account);
     }
-    this.unsubscribe = robonomics.accountManager.onChange((account) => {
+    this.unsubscribe = this.$robonomics.accountManager.onChange((account) => {
       this.account = account.address;
       this.read(this.account);
     });
@@ -46,7 +44,7 @@ export default {
   },
   methods: {
     async read(address) {
-      const log = await robonomics.datalog.read(address);
+      const log = await this.$robonomics.datalog.read(address);
       this.log = log.map((item) => {
         return item.toHuman();
       });
@@ -55,8 +53,8 @@ export default {
       this.error = "";
       this.result = "";
       try {
-        const tx = robonomics.datalog.write(this.data);
-        const resultTx = await robonomics.accountManager.signAndSend(tx);
+        const tx = this.$robonomics.datalog.write(this.data);
+        const resultTx = await this.$robonomics.accountManager.signAndSend(tx);
         console.log("saved", resultTx);
         this.result = `${resultTx.blockNumber}-${resultTx.txIndex}`;
         this.read(this.account);

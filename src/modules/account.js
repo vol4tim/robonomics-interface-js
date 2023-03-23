@@ -1,16 +1,12 @@
-export default class Account {
-  /**
-   * @param {import('../index').Robonomics} robonomics
-   */
-  constructor(robonomics) {
-    this.robonomics = robonomics;
-  }
-  async getBalance(account, cb = null) {
-    if (cb === null) {
-      const { data } = await this.robonomics.api.query.system.account(account);
+import Base from "./base";
+
+export default class Account extends Base {
+  async getBalance(account, cb) {
+    if (!cb) {
+      const { data } = await this.api.query.system.account(account);
       return data;
     }
-    return this.robonomics.api.query.system.account(account, ({ data }) => {
+    return this.api.query.system.account(account, ({ data }) => {
       cb(data);
     });
   }

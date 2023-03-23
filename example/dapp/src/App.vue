@@ -1,12 +1,11 @@
 <template>
   <template v-if="isReady">
-    <Account />
+    {{ block }}
+    <account />
     <hr />
-    <Datalog />
+    <datalog />
     <hr />
-    <Launch />
-    <hr />
-    <Liability />
+    <launch />
   </template>
   <template v-else>...</template>
 </template>
@@ -15,25 +14,27 @@
 import Account from "./components/Account.vue";
 import Datalog from "./components/Datalog.vue";
 import Launch from "./components/Launch.vue";
-import Liability from "./components/Liability.vue";
-import robonomics from "./robonomics";
 
 export default {
   name: "App",
   components: {
     Account,
     Datalog,
-    Launch,
-    Liability
+    Launch
   },
   data() {
     return {
-      isReady: false
+      isReady: false,
+      block: undefined
     };
   },
   async created() {
-    await robonomics.run();
-    this.isReady = true;
+    this.$robonomicsReady(() => {
+      this.isReady = true;
+      this.$robonomics.events.onBlock((number) => {
+        this.block = number;
+      });
+    });
   }
 };
 </script>

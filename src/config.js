@@ -1,6 +1,5 @@
 export default {
-  name: false,
-  runImmediate: false,
+  name: undefined,
   endpoint: "wss://kusama.rpc.robonomics.network/",
   types: {
     IPFS: {

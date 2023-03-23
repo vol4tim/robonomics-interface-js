@@ -6,17 +6,11 @@
     <button @click="send">Send</button>
     <div>{{ result }}</div>
     <div>{{ error }}</div>
-
-    <DatalogEvents v-if="robot" :address="robot" />
   </div>
 </template>
 
 <script>
-import robonomics from "../robonomics";
-import DatalogEvents from "./DatalogEvents.vue";
-
 export default {
-  components: { DatalogEvents },
   data() {
     return {
       robot: "",
@@ -32,7 +26,7 @@ export default {
     }
   },
   async created() {
-    this.unsubscribe = await robonomics.launch.on({}, (item) => {
+    this.unsubscribe = await this.$robonomics.launch.on({}, (item) => {
       console.log(item);
     });
   },
@@ -46,8 +40,8 @@ export default {
       this.error = "";
       this.result = "";
       try {
-        const tx = robonomics.launch.send(this.robot, this.parameter);
-        const resultTx = await robonomics.accountManager.signAndSend(tx);
+        const tx = this.$robonomics.launch.send(this.robot, this.parameter);
+        const resultTx = await this.$robonomics.accountManager.signAndSend(tx);
         console.log("saved", resultTx);
         this.result = `${resultTx.blockNumber}-${resultTx.txIndex}`;
         this.status = !this.status;

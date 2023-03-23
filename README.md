@@ -16,15 +16,10 @@ Or using [yarn](https://yarnpkg.com/). To install, run:
 > yarn add robonomics-interface @polkadot/api
 ```
 
-For dApp require dependencies
-
-```bash
-> yarn add @polkadot/extension-dapp @polkadot/ui-keyring
-```
-
 ## Usage example
 
-https://github.com/airalab/robonomics-interface-js/tree/master/example/index.js
+dApp -> https://github.com/airalab/robonomics-interface-js/tree/master/example/dapp/README.md
+node js - https://github.com/airalab/robonomics-interface-js/tree/master/example/nodejs/index.js
 
 ## Links
 

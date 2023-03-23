@@ -21,8 +21,6 @@
 </template>
 
 <script>
-import { AccountManagerUi as AccountManager } from "robonomics-interface";
-import robonomics from "../robonomics";
 import { formatBalance } from "@polkadot/util";
 
 export default {
@@ -38,28 +36,15 @@ export default {
   },
   created() {
     this.connect();
-    robonomics.accountManager.onReady(() => {
+    this.$robonomics.accountManager.onReady(() => {
       this.isReady = true;
-      console.log("allow");
-      console.log("polkadot-js", AccountManager.checkAllow("polkadot-js"));
-      console.log("talisman", AccountManager.checkAllow("talisman"));
-      console.log("subwallet-js", AccountManager.checkAllow("subwallet-js"));
     });
-    setTimeout(() => {
-      console.log("installed");
-      console.log("polkadot-js", AccountManager.checkInstalled("polkadot-js"));
-      console.log("talisman", AccountManager.checkInstalled("talisman"));
-      console.log(
-        "subwallet-js",
-        AccountManager.checkInstalled("subwallet-js")
-      );
-    }, 1000);
   },
   computed: {
     balancePrint() {
       return formatBalance(this.balance, {
-        decimals: robonomics.api.registry.chainDecimals[0],
-        withUnit: robonomics.api.registry.chainTokens[0]
+        decimals: this.$robonomics.api.registry.chainDecimals[0],
+        withUnit: this.$robonomics.api.registry.chainTokens[0]
       });
     }
   },
@@ -68,20 +53,23 @@ export default {
       if (this.unsubscribe) {
         this.unsubscribe();
       }
-      await robonomics.accountManager.selectAccountByAddress(address);
-      this.unsubscribe = await robonomics.account.getBalance(address, (r) => {
-        this.balance = r.free.sub(r.feeFrozen);
-      });
+      await this.$robonomics.accountManager.setSender(address);
+      this.unsubscribe = await this.$robonomics.account.getBalance(
+        address,
+        (r) => {
+          this.balance = r.free.sub(r.feeFrozen);
+        }
+      );
     }
   },
   methods: {
     async connect() {
       this.error = "";
       try {
-        await AccountManager.initPlugin(robonomics.accountManager.keyring, {
+        await this.$robonomics.accountManager.initPlugin({
           isDevelopment: true
         });
-        this.accounts = robonomics.accountManager.getAccounts();
+        this.accounts = this.$robonomics.accountManager.getAccounts();
         if (this.accounts.length) {
           this.account = this.accounts[0].address;
         }

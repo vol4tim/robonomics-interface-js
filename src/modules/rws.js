@@ -1,46 +1,42 @@
-export default class Rws {
-  /**
-   * @param {import('../index').Robonomics} robonomics
-   */
-  constructor(robonomics) {
-    this.robonomics = robonomics;
-    this.subscription = false;
-  }
+import Base from "./base";
+
+export default class Rws extends Base {
+  subscription = false;
 
   // consts
   getAuctionCost() {
-    return this.robonomics.api.consts.rws.auctionCost;
+    return this.api.consts.rws.auctionCost;
   }
   getMinimalBid() {
-    return this.robonomics.api.consts.rws.minimalBid;
+    return this.api.consts.rws.minimalBid;
   }
 
   // queries
   async getAuctionQueue() {
-    return await this.robonomics.api.query.rws.auctionQueue();
+    return await this.api.query.rws.auctionQueue();
   }
   async getUnspendBondValue() {
-    return await this.robonomics.api.query.rws.unspendBondValue();
+    return await this.api.query.rws.unspendBondValue();
   }
   async getAuction(index) {
-    return await this.robonomics.api.query.rws.auction(index);
+    return await this.api.query.rws.auction(index);
   }
   async getLedger(account) {
-    return await this.robonomics.api.query.rws.ledger(account);
+    return await this.api.query.rws.ledger(account);
   }
   async getDevices(account) {
-    return await this.robonomics.api.query.rws.devices(account);
+    return await this.api.query.rws.devices(account);
   }
 
   // extrinsics
   bid(index, amount) {
-    return this.robonomics.api.tx.rws.bid(index, amount);
+    return this.api.tx.rws.bid(index, amount);
   }
   setDevices(devices) {
-    return this.robonomics.api.tx.rws.setDevices(devices);
+    return this.api.tx.rws.setDevices(devices);
   }
   call(subscription, tx) {
-    return this.robonomics.api.tx.rws.call(subscription, tx);
+    return this.api.tx.rws.call(subscription, tx);
   }
 
   // helpers
