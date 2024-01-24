@@ -1,5 +1,5 @@
-import mh from "multihashing-async";
 import CID from "cids";
+import mh from "multihashing-async";
 
 export function mergedeep(current, updates) {
   for (let key of Object.keys(updates)) {
@@ -27,4 +27,19 @@ export function cidToHex(cid) {
       "hex"
     )
   );
+}
+
+export function stringToHex(str) {
+  const strBuf = Buffer.from(str.toString(), "utf-8");
+  if (strBuf.length > 32) {
+    throw new Error("max 32");
+  }
+  const bag = Buffer.alloc(32);
+  const fill = Buffer.concat([bag, strBuf]);
+  const buf = Buffer.from(fill).slice(fill.length - 32, fill.length);
+  return "0x" + buf.toString("hex");
+}
+
+export function hexToString(hex) {
+  return Buffer.from(hex.slice(2), "hex").toString();
 }
