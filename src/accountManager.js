@@ -98,10 +98,10 @@ export default class AccountManager {
       if (!this.rws.isSubscription(this.subscription)) {
         throw new Error(`Not subscription for ${this.subscription}`);
       }
-      const devices = await this.rws.getDevices(this.subscription);
-      if (
-        !devices.map((item) => item.toString()).includes(this.account.address)
-      ) {
+      const devices = (await this.rws.getDevices(this.subscription)).map(
+        (item) => encodeAddress(item.toString())
+      );
+      if (!devices.includes(encodeAddress(this.account.address))) {
         throw new Error(
           `Not device ${this.account.address} for ${this.subscription}`
         );
